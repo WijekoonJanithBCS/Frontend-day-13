@@ -1,11 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 
 export default function AdminPage(){
    
         return(
             <div className="w-full h-full border-2 border-red-500 flex ">
                 <div className="w-[200px] h-full bg-blue-400">
-                    
+                    <Link to="/admin/">Orders</Link><br/>
+                    <Link to="/admin/products" >Products</Link><br/>
+                    <Link to="/admin/users">Users</Link>
                 </div>
                 <div className="flex-1 h-full bg-amber-300">
                     <Routes>
