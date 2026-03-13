@@ -1,19 +1,26 @@
 import { Link, Route, Routes } from "react-router-dom";
+import { FaShoppingBag } from "react-icons/fa";
+import { RiShoppingBag2Fill } from "react-icons/ri";
+import { HiUsers } from "react-icons/hi2";
+import AdminProductsPage from "./admin/adminProductsPage.jsx";
+import AdminAddProductPage from "./admin/adminAddProductPage.jsx";
 
 export default function AdminPage(){
    
         return(
-            <div className="w-full h-full border-2 border-red-500 flex ">
-                <div className="w-[200px] h-full bg-blue-400">
-                    <Link to="/admin/">Orders</Link><br/>
-                    <Link to="/admin/products" >Products</Link><br/>
-                    <Link to="/admin/users">Users</Link>
+            <div className="w-full h-screen flex bg-blue-400">
+                <div className="w-[200px] h-full bg-blue-400 text-white text-xl">
+                    <h1 className="text-[30px] text-center border-b-4">Admin Panel</h1>
+                    <Link className="flex w-full p-[10px]  gap-5 mt-5 hover:text-red-600" to="/admin/"><FaShoppingBag /> Orders</Link><br/>
+                    <Link className="flex w-full p-[10px]  gap-5 mt-5 hover:text-red-600" to="/admin/products" ><RiShoppingBag2Fill/>Products</Link><br/>
+                    <Link className="flex w-full p-[10px]  gap-5 mt-5 hover:text-red-600" to="/admin/users"><HiUsers/>Users</Link>
                 </div>
-                <div className="flex-1 h-full bg-amber-300">
+                <div className="flex-1 h-full border-4 border-blue-400 rounded-2xl bg-white p-4">
                     <Routes>
                         <Route path="/" element={<h1>orders page</h1>}/>
-                        <Route path="/products" element={<h1>products page</h1>}/>
+                        <Route path="/products" element={<AdminProductsPage/>}/>
                         <Route path="/users" element={<h1>users page</h1>}/>
+                        <Route path="/add-product" element={<AdminAddProductPage/>}/>
                     </Routes>
                     
                       

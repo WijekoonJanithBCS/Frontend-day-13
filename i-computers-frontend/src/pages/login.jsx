@@ -16,8 +16,11 @@ export default function LoginPage(){
             password: password
         }).then((response)=>{
             console.log(response)
+            localStorage.setItem("token", response.data.token)
+            localStorage.getItem("token")
+
             if(response.data.role=="admin"){
-                
+               
                 navigate("/admin/")
             }
             else{
