@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from axios;
 
 export default function AdminAddProductPage(){
     const [name, setName] = useState("");
@@ -11,8 +12,29 @@ export default function AdminAddProductPage(){
     const [brand, setBrand] = useState("Standard");
     const [model, setModel] = useState("");
     const [isVisible, setIsVisible] = useState(true);
-;    return(
-        <div className="w-full max-h-full flex flex-wrap">
+
+    async function handleAddProduct(){
+        try{
+            await axios.post(import.meta.env.VITE_API_URL + "/products", {
+                productId: productId,
+                name: name,
+                description: description,
+                price: price,
+                labelledPrice: labelledPrice,
+                sategory: category,
+                brand: brand,
+                model:model,
+                isVisible: isVisible,
+            })
+        }catch(err){
+            toast.err("failed to add product");
+            console.log(err);
+            return;
+        }
+    }
+    return(
+        <div className="w-full max-h-full flex flex-wrap overflow-y-scroll">
+            <h1 className="w-full font-bold mb-4 text-3xl sticky top-0 bg-white">Add New Product</h1>
             <div className="w-[50%] h-[100px] flex flex-col">
                 <label className="text-xl font-bold ml-2">Product ID : </label>
                 <input value={productId} onChange={(e)=>{setProductId(e.target.value)}}type="text" placeholder="Ex : ID001" className="border-3 border-blue-400 rounded-[10px] h-[50px] m-2 p-2 focus:outline-none"/>
@@ -69,6 +91,10 @@ export default function AdminAddProductPage(){
                     <option value={true}>YES</option>
                     <option value={false}>NO</option>
                 </select>
+            </div>
+            <div className="w-full h-[80px] bg-blue-200 sticky bottom-0 rounded-b-2xl flex justify-end items-center p-4">
+                <button onClick={handleAddProduct} className="bg-blue-400 text-white font-bold px-4 py-3 rounded-[10px] hover:bg-blue-600 mr-2">Add Product</button>
+                <button className="bg-blue-400 text-white font-bold px-4 py-3 rounded-[10px] hover:bg-blue-600">Cancel</button>
             </div>
             
         </div>
