@@ -1,5 +1,7 @@
 import { useState } from "react";
-import axios from axios;
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminAddProductPage(){
     const [name, setName] = useState("");
@@ -12,23 +14,39 @@ export default function AdminAddProductPage(){
     const [brand, setBrand] = useState("Standard");
     const [model, setModel] = useState("");
     const [isVisible, setIsVisible] = useState(true);
+    const navigate = useNavigate();
 
     async function handleAddProduct(){
         try{
+            const token = localStorage.getItem("token");
+            if(token==null){
+                toast.error("please login to add products");
+                window.location.href= "/login";
+                return;
+            }
             await axios.post(import.meta.env.VITE_API_URL + "/products", {
                 productId: productId,
                 name: name,
                 description: description,
                 price: price,
                 labelledPrice: labelledPrice,
-                sategory: category,
+                altNames: altNames.split(","),
+                category: category,
                 brand: brand,
                 model:model,
                 isVisible: isVisible,
+            },{
+                headers: {
+                    Authorization: "Bearer " + token
+                }
             })
+            toast.success("product added successfully");
+            //redirect to admin/product page
+            navigate("/admin/pdoducts")
+
         }catch(err){
-            toast.err("failed to add product");
-            console.log(err);
+            //toast.error("failed to add product");
+            toast.error(err?.response?.data?.message || "failed to add product");
             return;
         }
     }

@@ -27,11 +27,11 @@ export default function LoginPage(){
                 //send to home page
             }
             //alert("Login successful")
-            toast.success("Login success")
+            toast.success("Login successful")
         }).catch((error)=>{
             console.log(error)
             //alert("login failed")
-            toast.error("Login failed")
+            toast.error(error?.response?.data?.message || "failed to login");
         })
     }
 
