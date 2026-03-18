@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import UploadFile from "../../utils/mediaUpload";
+// upload file import krla nah 
+// cl ekak aran kiyala denn oni nam 10pm walin passe msg ekk dann cl ekk gnnam sir clz krn gmn inne
 
 export default function AdminAddProductPage(){
     const [name, setName] = useState("");
@@ -14,6 +17,7 @@ export default function AdminAddProductPage(){
     const [brand, setBrand] = useState("Standard");
     const [model, setModel] = useState("");
     const [isVisible, setIsVisible] = useState(true);
+    const [files, setFiles] = useState([]);
     const navigate = useNavigate();
 
     async function handleAddProduct(){
@@ -24,6 +28,16 @@ export default function AdminAddProductPage(){
                 window.location.href= "/login";
                 return;
             }
+
+            const fileUploadPromises = [];
+            for(let i=0 ; i<files.length ; i++){
+                fileUploadPromises[i] = UploadFile(files[i]);
+            }
+
+            const imageURL = await Promise.all(fileUploadPromises);
+
+            
+            
             await axios.post(import.meta.env.VITE_API_URL + "/products", {
                 productId: productId,
                 name: name,
@@ -31,6 +45,7 @@ export default function AdminAddProductPage(){
                 price: price,
                 labelledPrice: labelledPrice,
                 altNames: altNames.split(","),
+                images: imageURL,
                 category: category,
                 brand: brand,
                 model:model,
@@ -40,11 +55,14 @@ export default function AdminAddProductPage(){
                     Authorization: "Bearer " + token
                 }
             })
+            
             toast.success("product added successfully");
             //redirect to admin/product page
-            navigate("/admin/pdoducts")
+            navigate("/admin/products")
+            
 
         }catch(err){
+            console.log(err);
             //toast.error("failed to add product");
             toast.error(err?.response?.data?.message || "failed to add product");
             return;
@@ -64,6 +82,10 @@ export default function AdminAddProductPage(){
             <div className="w-full h-[150px] flex flex-col">
                 <label className="text-xl font-bold ml-2">Description : </label>
                 <textarea value={description} onChange={(e)=>{setDescription(e.target.value)}}type="text" placeholder="Description" className="border-3 border-blue-400 rounded-[10px] h-[100px] m-2 p-2 focus:outline-none"/>
+            </div>
+            <div className="w-[100%] h-[100px] flex flex-col">
+                <label className="text-xl font-bold ml-2">Images : </label>
+                <input multiple type="file" onChange={(e)=>{setFiles(e.target.files)}} className="border-3 border-blue-400 rounded-[10px] h-[50px] m-2 p-2 focus:outline-none"/>
             </div>
             <div className="w-[100%] h-[100px] flex flex-col">
                 <label className="text-xl font-bold ml-2">Alternative Names ( Comma Seperated ) : </label>
