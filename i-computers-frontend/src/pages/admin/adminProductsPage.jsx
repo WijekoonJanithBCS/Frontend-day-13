@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaCirclePlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
 
 export default function AdminProductsPage(){
 
@@ -39,6 +40,7 @@ export default function AdminProductsPage(){
                         <th>isVisible</th>
                         <th>brand</th>
                         <th>model</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
 
@@ -61,6 +63,9 @@ export default function AdminProductsPage(){
                                 <td>{item.isVisible ? "visible" : "hidden"}</td>
                                 <td>{item.brand}</td>
                                 <td>{item.model}</td>
+                                <td className="px-5 py-4">
+                                    <Link to="/admin/update-product" state={item}><MdEdit /></Link>
+                                </td>
                             </tr>
                         ))
                     }

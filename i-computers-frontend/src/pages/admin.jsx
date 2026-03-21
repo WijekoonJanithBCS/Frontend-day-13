@@ -4,6 +4,8 @@ import { RiShoppingBag2Fill } from "react-icons/ri";
 import { HiUsers } from "react-icons/hi2";
 import AdminProductsPage from "./admin/adminProductsPage.jsx";
 import AdminAddProductPage from "./admin/adminAddProductPage.jsx";
+import AdminUpdateProductPage from "./admin/adminUpdateProductPage.jsx";
+
 
 export default function AdminPage(){
    
@@ -21,6 +23,7 @@ export default function AdminPage(){
                         <Route path="/products" element={<AdminProductsPage/>}/>
                         <Route path="/users" element={<h1>users page</h1>}/>
                         <Route path="/add-product" element={<AdminAddProductPage/>}/>
+                        <Route path="/update-product" element={<AdminUpdateProductPage/>}/>
                     </Routes>
                     
                       
