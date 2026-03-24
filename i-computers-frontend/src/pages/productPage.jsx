@@ -23,7 +23,7 @@ export default function ProductPage(){
 }, [loading]);
 
 return(
-    <div className="flex justify-center items-centerflex-wrap">
+    <div className="flex justify-center items-center flex-wrap">
         {
             products.map(
                 (item)=>{

@@ -3,8 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import UploadFile from "../../utils/mediaUpload";
-// upload file import krla nah 
-// cl ekak aran kiyala denn oni nam 10pm walin passe msg ekk dann cl ekk gnnam sir clz krn gmn inne
+
 
 export default function AdminAddProductPage(){
     const [name, setName] = useState("");
@@ -42,8 +41,8 @@ export default function AdminAddProductPage(){
                 productId: productId,
                 name: name,
                 description: description,
-                price: price,
-                labelledPrice: labelledPrice,
+                price: price, 
+                labelledPrice: labelledPrice, 
                 altNames: altNames.split(","),
                 images: imageURL,
                 category: category,
@@ -125,12 +124,23 @@ export default function AdminAddProductPage(){
                 <label className="text-xl font-bold ml-2">Model : </label>
                 <input value={model} onChange={(e)=>{setModel(e.target.value)}} type="text" placeholder="Ex: Inspiration" className="border-3 border-blue-400 rounded-[10px] h-[50px] m-2 p-2 focus:outline-none"/>
             </div>
-            <div className="w-[25%] h-[100px] flex flex-col">
+            {/* <div className="w-[25%] h-[100px] flex flex-col">
                 <label className="text-xl font-bold ml-2">Is visible : </label>
                 <select value={isVisible} onChange={(e)=>{setIsVisible(e.target.value)}}  className="border-3 border-blue-400 rounded-[10px] h-[50px] m-2 p-2 focus:outline-none">
                     <option value={true}>YES</option>
                     <option value={false}>NO</option>
                 </select>
+            </div> */}
+            <div className="w-[25%] h-[100px] flex flex-col">
+            <label className="text-xl font-bold ml-2">Is visible : </label>
+            <select
+                value={isVisible}
+                onChange={(e) => setIsVisible(e.target.value === "true")}
+                className="border-3 border-blue-400 rounded-[10px] h-[50px] m-2 p-2 focus:outline-none"
+                >
+                <option value="true">YES</option>
+                <option value="false">NO</option>
+            </select>
             </div>
             <div className="w-full h-[80px] bg-blue-200 sticky bottom-0 rounded-b-2xl flex justify-end items-center p-4">
                 <button onClick={handleAddProduct} className="bg-blue-400 text-white font-bold px-4 py-3 rounded-[10px] hover:bg-blue-600 mr-2">Add Product</button>
