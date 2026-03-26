@@ -6,7 +6,7 @@ export default function ProductCard(props){
     return(
 
         <Link to={"/overview/"+product.productId} >
-            <div className="w-[400px] h-[400px] m-4 p-4 rounded-lg shadow-lg bg-blue-300 overflow-hidden">
+            <div className="w-[400px] h-[400px] m-4 p-4 rounded-lg shadow-lg bg-blue-300 overflow-hidden ">
            
                  <img src={product.images[0]} className="h-[200px] w-full object-cover rounded-lg border-2 border-black object-cover"></img>
                  <div className="h-[150px] bg-blue-200 w-full absolute-bottom border justify-center flex-col p-2 mt-2">

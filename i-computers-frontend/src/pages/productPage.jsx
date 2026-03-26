@@ -20,7 +20,7 @@ export default function ProductPage(){
                 setLoading(false);
             });
     }
-}, [loading]);
+}, []);
 
 return(
     <div className="flex justify-center items-center flex-wrap">
