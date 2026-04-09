@@ -1,61 +1,68 @@
-export function GetCart(){
+export function GetCart() {
     const cartString = localStorage.getItem("cart");
 
-    if(cartString == null){
-        localStorage.setItem("cart", JSON.stringify([]));
+    console.log(cartString);
+    //""
+    if (cartString == null) {
+        console.log("cart is empty");
+        localStorage.setItem("cart", "[]");
         return [];
-    }
-    else{
+    }else{
+        console.log("cart found");
         const cart = JSON.parse(cartString)
         return cart;
     }
 }
 const sampleCart = [
     {
-        product:{
-            productId : "123456",
-            name : "ASUS ROG Strix G15",
-            price : 150000,
-            image : "https://m.media-amazon.com/images/I/81+N8qQyZL._AC_UY218_.jpg",
+        product: {
+            productId: "123456",
+            name: "ASUS ROG Strix G15",
+            price: 150000,
+            image: "https://m.media-amazon.com/images/I/81+N8qQyZL._AC_UY218_.jpg",
         },
         qty: 1,
     },
 ]
-export function addToCart(product, qty){
+
+export function addToCart(product, qty) {
+    console.log("adding")
     const cart = GetCart();
 
-    const existingProductIndex = cart.findIndex(
-        (item) => {
-            return item.product.productId === product.productId;
-        }
-    )
+    console.log(cart);
 
-    if(existingProductIndex !== -1){
-        if(qty <= 0){
+    const existingProductIndex = cart.findIndex(
+        (item) => item.product.productId === product.productId
+    );
+
+    if (existingProductIndex === -1) {
+        // ✅ Product NOT in cart → add new
+        if (qty <= 0) {
             console.error("quantity should be greater than 0");
             return;
         }
 
         cart.push({
-            product : {
-                productId : product.productId,
-                name : product.name,
-                price : product.price,
-                image : product.images[0],
+            product: {
+                productId: product.productId,
+                name: product.name,
+                price: product.price,
+                image: product.images[0],
             },
             qty: qty
-        })
-    }
-    else{
+        });
+
+    } else {
+        // ✅ Product exists → update quantity
         const newQty = cart[existingProductIndex].qty + qty;
-        if(newQty <= 0){
+
+        if (newQty <= 0) {
             cart.splice(existingProductIndex, 1);
-        }
-        else{
+        } else {
             cart[existingProductIndex].qty = newQty;
         }
     }
-    const cartString = JSON.stringify(cart);
-    localStorage.setItem("cart", cartString);
+
+    localStorage.setItem("cart", JSON.stringify(cart));    
 }
 
