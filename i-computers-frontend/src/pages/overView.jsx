@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import toast from "react-hot-toast"
+import toast, { Toaster } from "react-hot-toast"
 import ImageSlideShow from "../components/imageSlideShow";
+import { addToCart, GetCart,   } from "../utils/cart";
 
 export default function Overview(){
 
@@ -23,7 +24,10 @@ export default function Overview(){
     }, [])
 
    return (
-        <div className="w-full min-h-screen flex justify-center items-center">
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
+         <div className="w-full min-h-screen flex justify-center items-center">
+        
             {
             product == null ? (
                 <div>Loading.....</div>
@@ -57,14 +61,30 @@ export default function Overview(){
                             <p className="text-lg font-bold mb-2">Price : {product.labelledPrice}</p>
                         }
                         <div className="w-full h-[100px] flex justify-center items-center text-white font-bold gap-5">
-                            <button className="px-4 py-3 bg-green-400 cursor-pointer rounded-lg">ADD TO CART</button>
-                            <button className="px-4 py-3 bg-blue-500 cursor-pointer rounded-lg">BUY NOW</button>
+                            <button className="px-4 py-3 bg-green-400 cursor-pointer rounded-lg" onClick={
+                                ()=>{
+                                    addToCart(product, 1);
+                                    console.log("clicked");
+                                    toast.success(product.name + "added to cart");
+                                }
+                                }>ADD TO CART</button>
+                            <button className="px-4 py-3 bg-blue-500 cursor-pointer rounded-lg" onClick={
+                                ()=>{
+                                    console.log(GetCart());
+                                }
+                                }>BUY NOW</button>
                         </div>
                     </div>
                 </div>
             )
             }
         </div>
-);
+
     
+
+    </>
+    )
 }
+         
+         
+       
