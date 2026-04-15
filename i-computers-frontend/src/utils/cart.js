@@ -66,3 +66,13 @@ export function addToCart(product, qty) {
     localStorage.setItem("cart", JSON.stringify(cart));    
 }
 
+export default function getCartTotal(cart){
+    let total = 0;
+
+    cart.forEach(
+        (cartItem) => {
+        total = total+ cartItem.product.price * cartItem.qty;
+    });
+    return total;
+}
+

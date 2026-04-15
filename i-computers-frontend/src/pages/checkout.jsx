@@ -1,13 +1,17 @@
 import { useState } from "react";
 import getCartTotal, { addToCart, GetCart } from "../utils/cart";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
-export default function Cart(){
+export default function CheckOut(){
+    const location = useLocation();
+    const [cart, setCart] = useState(location.state || []);
+    const navigate = useNavigate();
 
-    
-    const [cart, setCart] = useState(GetCart());
+    if(location.state == null){
+        navigate("/products");
+    }
 
     return (
         <div className="w-full h-[calc(100vh-100px)]  overflow-y-scroll">
@@ -56,7 +60,7 @@ export default function Cart(){
                                 }
                                 
                                 <div className="bg-blue-300 w-[600px] h-[125px] sticky bottom-0 rounded-2xl flex py-8">
-                                    <Link state={cart} to="/checkout" className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80">Check Out</Link>
+                                    <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80">Buy Now</button>
                                     <span className="text-2xl font-bold text-black absolute right-5 border-b">TOTAL LKR. {getCartTotal(cart)}</span>
 
                                 </div>

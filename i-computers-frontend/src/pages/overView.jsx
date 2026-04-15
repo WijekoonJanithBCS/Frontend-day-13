@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import ImageSlideShow from "../components/imageSlideShow";
 import { addToCart, GetCart } from "../utils/cart";
@@ -72,14 +72,22 @@ export default function Overview() {
                 >
                   ADD TO CART
                 </button>
-                <button
+                <Link to="/checkout" state={[
+                    {
+                        product: {
+                            productId: product.productId,
+                            name: product.name,
+                            price: product.price,
+                            image: product.images[0]
+                        },
+                        qty: 1,
+                    }
+                ]}
                   className="px-4 py-3 bg-blue-500 cursor-pointer rounded-lg"
-                  onClick={() => {
-                    console.log(GetCart());
-                  }}
+                  
                 >
                   BUY NOW
-                </button>
+                </Link>
               </div>
             </div>
           </div>
