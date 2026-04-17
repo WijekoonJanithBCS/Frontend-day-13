@@ -30,17 +30,24 @@ export default function CheckOut(){
                                                         <h1 className="text-xl font-bold">{cartItem.product.name}</h1>
                                                         <div className="w-[200px] h-[30px] border rounded-full overflow-hidden flex">
                                                             <button onClick={ () => {
-                                                                    addToCart(cartItem.product, -1);
-                                                                    setCart(GetCart());
-                                                                    console.log("updated");
+                                                                    const newCart = [...cart]
+
+                                                                    newCart[index].qty = newCart[index].qty-1
+                                                                    if(newCart[index.qty <= 0]){
+                                                                        newCart.splice(index,1)
+
+                                                                    }
+                                                                    setCart(newCart)   
+                                                                    
                                                                 }}className="w-[60px] h-full flex justify-center items-center text-2xl font-bold text-black hover:bg-red-500"
                                                                 >-</button>
                                                             <span className="w-[80px] h-full flex justify-center items-center text-2Xl font-bold text-black">{cartItem.qty}</span>
                                                             <button className="w-[60px] h-full flex justify-center items-center text-2xl font-bold text-black hover:bg-red-500"
                                                             onClick={ ()=> {
-                                                                addToCart(cartItem.product, +1);
-                                                                setCart(GetCart());
-                                                                console.log("updated");
+                                                                const newCart = [...cart];
+                                                                newCart[index].qty = newCart[index].qty + 1;
+                                                                setCart(newCart);
+                                                                
                                                             }
                                                             }>+</button>
                                                         </div>
