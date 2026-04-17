@@ -57,7 +57,7 @@ export default function Overview() {
               <p className="text-md- mb-2">{product.description}</p>
               <p className="text-2xl font-bold mb-4">{product.price}</p>
               {product.labelledPrice && (
-                <p className="text-lg font-bold mb-2">
+                <p className="text-lg font-bold mb-2 line-through">
                   Price : {product.labelledPrice}
                 </p>
               )}

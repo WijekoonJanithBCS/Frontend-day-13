@@ -51,7 +51,7 @@ export default function AdminProductsPage(){
                                 <td>{item.productId}</td>
                                 <td>{item.name}</td>
                                 <td>{item.price ? item.price.toFixed(2) : "0.00"}</td>
-                                <td>{item.labelledPrice}</td>
+                                <td>{item.labelledPrice ? item.labelledPrice.toFixed(2) : "0.00"}</td>
                                 <td>{item.category || "uncategorized"}</td>
                                 <td>
                                     <img 
