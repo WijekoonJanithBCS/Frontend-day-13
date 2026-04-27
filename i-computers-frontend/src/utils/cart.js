@@ -36,7 +36,7 @@ export function addToCart(product, qty) {
     );
 
     if (existingProductIndex === -1) {
-        // ✅ Product NOT in cart → add new
+        
         if (qty <= 0) {
             console.error("quantity should be greater than 0");
             return;

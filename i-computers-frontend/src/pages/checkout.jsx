@@ -1,6 +1,7 @@
 import { useState } from "react";
 import getCartTotal, { addToCart, GetCart } from "../utils/cart";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function CheckOut() {
   const location = useLocation();
@@ -10,6 +11,34 @@ export default function CheckOut() {
   if (location.state == null) {
     navigate("/products");
   }
+
+  async function placeOrder() {
+    const order= {
+        name: "janith",
+        items: [],
+        address: "no 123, main street, colombo 03",
+        phoneNumber: "0771234567",
+        totalAmount: getCartTotal(cart)
+    }
+    cart.forEach(
+        (item) => {
+        order.items.push({
+            productId: item.product.productId,
+            qty: item.qty
+        })
+
+       });
+        console.log(order);
+
+        try {
+            await axios.post(import.meta.env.VITE_API_URL + "/orders", order);
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+
 
   return (
     <div className="w-full h-[calc(100vh-100px)]  overflow-y-scroll">
@@ -33,18 +62,19 @@ export default function CheckOut() {
                 <div className="w-[200px] h-[30px] border rounded-full overflow-hidden flex">
                   <button
                     onClick={() => {
-                      const newCart = [...cart];
+                        const newCart = [...cart];
 
-                      newCart[index].qty = newCart[index].qty - 1;
-                      if (newCart[index.qty <= 0]) {
-                        newCart.splice(index, 1);
-                      }
-                      setCart(newCart);
-                    }}
+                        if (newCart[index].qty === 1) {
+                            newCart.splice(index, 1); // remove item instead of going to 0
+                        } else {
+                            newCart[index].qty -= 1;
+                        }
+
+                        setCart(newCart);
+                        }}
                     className="w-[60px] h-full flex justify-center items-center text-2xl font-bold text-black hover:bg-red-500"
-                  >
-                    -
-                  </button>
+                  >-</button>
+
                   <span className="w-[80px] h-full flex justify-center items-center text-2Xl font-bold text-black">
                     {cartItem.qty}
                   </span>
@@ -55,9 +85,7 @@ export default function CheckOut() {
                       newCart[index].qty = newCart[index].qty + 1;
                       setCart(newCart);
                     }}
-                  >
-                    +
-                  </button>
+                  >+</button>
                 </div>
               </div>
               <div className="w-[170px] h-full bg-blue-400 flex flex-col justify-center items-end pr-2">
@@ -75,7 +103,7 @@ export default function CheckOut() {
         })}
 
         <div className="bg-blue-300 w-[600px] h-[125px] sticky bottom-0 rounded-2xl flex py-8">
-          <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80">
+          <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80" onClick={placeOrder}>
             Buy Now
           </button>
           <span className="text-2xl font-bold text-black absolute right-5 border-b">
