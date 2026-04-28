@@ -1,24 +1,37 @@
 import { useState } from "react";
 import getCartTotal, { addToCart, GetCart } from "../utils/cart";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+import CheckoutDetailsModel from "../components/checkoutDetailsModel.jsx";
 
-export default function CheckOut() {
-  const location = useLocation();
-  const [cart, setCart] = useState(location.state || []);
-  const navigate = useNavigate();
+  export default function CheckOut() {
+    const location = useLocation();
+    const [cart, setCart] = useState(location.state || []);
+    const navigate = useNavigate();
 
-  if (location.state == null) {
-    navigate("/products");
-  }
+    if (location.state == null) {
+        navigate("/products");
+    }
 
-  async function placeOrder() {
-    const order= {
-        name: "janith",
-        items: [],
-        address: "no 123, main street, colombo 03",
-        phoneNumber: "0771234567",
-        totalAmount: getCartTotal(cart)
+    async function placeOrder() {
+
+        const token = localStorage.getItem("token");
+        if(token==null){
+            toast.error("please login to place order");
+            window.location.href= "/login";
+            return;
+        }
+
+        const order= {
+            firstName: firstName,
+            lastName: lastName,
+            addressLine1: addressLine1,
+            addressLine2: addressLine2,
+            city: city,
+            postalCode: postalCode,
+            phone: phone,
+            country: "Sri Lanka",
+            items: []
     }
     cart.forEach(
         (item) => {
@@ -32,9 +45,11 @@ export default function CheckOut() {
 
         try {
             await axios.post(import.meta.env.VITE_API_URL + "/orders", order);
+            //console.log("STATUS:", res.status);
+            console.log("SENT ORDER:", order);
         }
         catch(error){
-            console.error(error);
+            console.log(error);
         }
     }
 
@@ -103,9 +118,9 @@ export default function CheckOut() {
         })}
 
         <div className="bg-blue-300 w-[600px] h-[125px] sticky bottom-0 rounded-2xl flex py-8">
-          <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80" onClick={placeOrder}>
-            Buy Now
-          </button>
+          <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80" onClick={placeOrder}></button>
+            <CheckoutDetailsModel cart={cart}/>
+          
           <span className="text-2xl font-bold text-black absolute right-5 border-b">
             TOTAL LKR. {getCartTotal(cart)}
           </span>
