@@ -32,25 +32,25 @@ import CheckoutDetailsModel from "../components/checkoutDetailsModel.jsx";
             phone: phone,
             country: "Sri Lanka",
             items: []
-    }
-    cart.forEach(
-        (item) => {
-        order.items.push({
-            productId: item.product.productId,
-            qty: item.qty
-        })
+      }
+      cart.forEach(
+          (item) => {
+          order.items.push({
+              productId: item.product.productId,
+              qty: item.qty
+          })
 
-       });
-        console.log(order);
+        });
+          console.log(order);
 
-        try {
-            await axios.post(import.meta.env.VITE_API_URL + "/orders", order);
-            //console.log("STATUS:", res.status);
-            console.log("SENT ORDER:", order);
-        }
-        catch(error){
-            console.log(error);
-        }
+          try {
+              await axios.post(import.meta.env.VITE_API_URL + "/orders", order);
+              //console.log("STATUS:", res.status);
+              console.log("SENT ORDER:", order);
+          }
+          catch(error){
+              console.log(error);
+          }
     }
 
 
@@ -118,7 +118,7 @@ import CheckoutDetailsModel from "../components/checkoutDetailsModel.jsx";
         })}
 
         <div className="bg-blue-300 w-[600px] h-[125px] sticky bottom-0 rounded-2xl flex py-8">
-          <button className="bg-blue-500 text-white px-4 py-3 font-bold rounded-lg ml-5 hover-bg-accent/80" onClick={placeOrder}></button>
+          
             <CheckoutDetailsModel cart={cart}/>
           
           <span className="text-2xl font-bold text-black absolute right-5 border-b">

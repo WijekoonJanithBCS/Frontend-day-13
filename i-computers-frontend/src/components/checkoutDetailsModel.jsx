@@ -16,8 +16,9 @@ export default function CheckoutDetailsModel(props){
     const cart= props.cart;
 
   
-    async function placeOrder() {
-
+    async function placeOrder(e) {
+        e.preventDefault();
+        
         const token = localStorage.getItem("token");
         if(token==null){
             toast.error("please login to place order");
@@ -33,8 +34,9 @@ export default function CheckoutDetailsModel(props){
             city: city,
             postalCode: postalCode,
             phoneNumber: phone,
+            email: props.email, 
             country: "Sri Lanka",
-            items: []
+            items: [],
         }
         cart.forEach(
             (item) => {
@@ -49,21 +51,23 @@ export default function CheckoutDetailsModel(props){
             try {
                 await axios.post(import.meta.env.VITE_API_URL + "/orders", order, {
                     headers: {
-                        Authorization: "Bearer " + $(token)
+                        Authorization: "Bearer " + (token)
                     }
                 });
-                //console.log("STATUS:", res.status);
-                console.log("SENT ORDER:", order);
+                
+                //console.log("SENT ORDER:", order);
+                toast.success("Order placed successfully");
+                window.location.href= "/";
             }
             catch(error){
-                console.log(error);
+                toast.error("Failed to place order");
             }
     }
 
     return (
        
         <>
-            <button className="bg-blue-400 text-white px-4 py-2 rounded"
+            <button className="bg-blue-400 text-white font-bold px-4 py-2 ml-5 rounded"
             onClick={()=>{setIsVisible(true)}}
                 >Buy Now
             </button>
@@ -74,7 +78,7 @@ export default function CheckoutDetailsModel(props){
                     X
                 </button>
                 <h2 className="text-2xl font-bold mb-4">Enter Shipping Details</h2>
-                <form className="flex flex-col gap-3">
+                <form onSubmit={placeOrder} className="flex flex-col gap-3">
                     <div className="flex gap-2">
                         <input type="text" placeholder="First Name" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} className="w-1/2 border p-2 rounded"/>
                         <input type="text" placeholder="Last Name" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} className="w-1/2 border p-2 rounded"/>
@@ -85,7 +89,7 @@ export default function CheckoutDetailsModel(props){
                     <input type="text" placeholder="Postal Code" value={postalCode} onChange={(e)=>{setPostalCode(e.target.value)}} className="w-full border p-2 rounded"/>
                     <input type="text" placeholder="Phone Number" value={phone} onChange={(e)=>{setPhone(e.target.value)}} className="w-full border p-2 rounded"/>
                     
-                    <button  onClick={placeOrder} className="bg-blue-500 text-white px-4 py-2 rounded ">
+                    <button  type="submit" onClick={placeOrder} className="bg-blue-500 text-white px-4 py-2 rounded">
                        Confirm
                     </button>
                 </form>
