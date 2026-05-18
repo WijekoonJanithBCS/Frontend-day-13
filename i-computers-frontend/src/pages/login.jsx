@@ -25,6 +25,7 @@ export default function LoginPage(){
             }
             else{
                 //send to home page
+                navigate("/")
             }
             //alert("Login successful")
             toast.success("Login successful")
@@ -52,7 +53,7 @@ export default function LoginPage(){
                     <p className="w-full text-right text-blue-700 pr-5">forgot password ? <Link to="/forgot-password" className="text-blue-600 font-bold">RESET</Link></p>
                     <button onClick={login} className="m-5 p-3 w-[90%] h-[50px] rounded-lg bg-blue-700 text-white font-bold">LOGIN</button>
                     <button className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-blue-600 text-blue-600 font-bold">LOGIN WITH GOOGLE</button>
-                    <p className="w-full text-right text-blue-700 pr-5">Dont have an account ? <Link to="/register" className="text-blue-600 font-bold">Register</Link></p>
+                    <p className="w-full text-right text-blue-700 pr-5">Dont have an account ? <Link to="/register" className="text-blue-600 font-bold">Sign up</Link></p>
                     
                 </div>
             </div>

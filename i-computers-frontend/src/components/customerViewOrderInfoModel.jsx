@@ -1,33 +1,12 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
-
-export default function ViewOrderModelInfo(props){
+//import toast from "react-hot-toast";
+export default function CustomerViewOrderInfoModel(props){
 
     const [isVisible, setIsVisible] = useState(false);  
     const order= props.order;
-    const [status, setStatus] = useState(order.status);
-    const [notes, setNotes] = useState(order.notes);
 
-    async function handleChange() {
-        try {
-            const token = localStorage.getItem("token");
-            await axios.put(import.meta.env.VITE_API_URL + "/orders/" + order.orderId, {
-                status: status,
-                notes: notes
-            }, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            });
-            toast.success("Order updated successfully");
-            window.location.reload();
-        }
-        catch(error){
-            toast.error("Failed to update order");
-        }
-    }
-
+    
     return(
         <>
             <button className="bg-blue-400 text-white px-1 py-2 rounded-2xl cursor-pointer w-2/3" onClick= {()=>{
@@ -41,7 +20,7 @@ export default function ViewOrderModelInfo(props){
                            
                             
                               
-                            <div className=" bg-blue-400 w-full h-[200px] rounded-md px-1 py-1 ">
+                            <div className=" bg-blue-400 w-full h-[165px] rounded-md px-1 py-1">
                                 <div className="flex flex-col px-0 py-1 items-start">
                                     <h1 className="text-xl font-bold text-white "> {order.orderId}</h1>
                                     <h1 className="text-sm font-bold text-white "> {new Date(order.date).toLocaleDateString()}</h1>
@@ -54,29 +33,23 @@ export default function ViewOrderModelInfo(props){
                                     <h1 className="text-sm font-bold text-white "> {order.postalCode}</h1> 
                                     <h1 className="text-sm font-bold text-white ">status : {order.status}</h1>
                                     <div className="flex items-center gap-5 mb-1">
-                                         <select  value={status} onChange={(e)=>{
-                                        setStatus(e.target.value)}} className=" font-bold text-white bg-blue-400 mt-1 pb-1">
                                         
-                                        <option value="Pending">Pending</option>
-                                        <option value="Shipped">Shipped</option>
-                                        <option value="Delivered">Delivered</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
                                     
                                     {/* RIGHT: NOTES */}
                                     
-                                        <textarea
+                                        {/* <textarea
                                         value={notes}
                                         onChange={(e) => setNotes(e.target.value)}
                                         className="border border-white rounded p-1 h-8 mb-2 w-[250px]"
                                         placeholder="Write note..."
                                         />
+                                        <p>{order.notes}</p>
 
                                         <button className=" bg-white text-blue-500 px-1 py-1 rounded mb-2 font-bold">
                                             Add Note
                                         </button>
+                                    </div> */}
                                     </div>
-                                   
                                     
                                     
                                     <div className="flex items-center gap-2"> 
@@ -92,33 +65,36 @@ export default function ViewOrderModelInfo(props){
                             "qty": 5,
                             "_id": "69f6f66aa4eb9cef5cae7f62"
                             <div className="flex-1 mt-5 overflow-y-scroll"> */}
-                            <div className="flex-1 mt-2 overflow-y-scroll h-[300px]">
+                            <div className="flex-1 mt-2 overflow-y-scroll h-[370px]">
                                 
                                 {
                                     order.items.map((item)=>{
                                         return(
-                                            <div className="w-full h-[80px] bg-blue-300 mb-3 rounded-md flex items-center gap-5 px-3">
+                                            <div className="w-full h-[80px] bg-blue-300 mb-1 rounded-md flex items-center gap-5 px-3 ">
                                                 <img src={item.image} alt={item.name} className="w-[60px] h-[60px] object-cover rounded-md border-1"/>
                                                 <div className="flex-1 border-1 rounded-md">
                                                     <h1 className="text-sm font-bold">{item.name}</h1>
                                                     <h1 className="text-sm font-bold">Price: {item.price.toFixed(2)}</h1>
                                                     <h1 className="text-sm font-bold">Qty: {item.qty}</h1>
                                                 </div>
+                                                                                     
                                             </div>
+                                            
                                         )
+                                        
                                     })
+                                    
                                 }
+                                <button
+                                    className="bg-blue-400 w-full text-white px-4 py-1 rounded-sm cursor-pointer font-bold mt-3 sticky bottom-0"
+                                    onClick={() => setIsVisible(false)}
+                                >
+                                    Close
+                                </button>
                             </div>
                            
-                            <button 
-                                onClick={()=>{setIsVisible(false)}} className="bg-blue-400 text-white px-2 py-2 rounded-md w-[200px] cursor-pointer font-bold float-left">
-                                Close
-                            </button>
-                            {
-                                ( order.status != status || order.notes != notes ) &&
-                                <button onClick={handleChange} className="bg-blue-400 text-white px-2 py-2 rounded-md w-[200px] cursor-pointer font-bold float-right">
-                                Save Changes
-                            </button>}
+                           
+                           
                         </div>       
 
 

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutDetailsModel(props){
 
@@ -14,6 +15,31 @@ export default function CheckoutDetailsModel(props){
     const [phone, setPhone] = useState("");
     //const [email, setEmail] = useState("");
     const cart= props.cart;
+    const navigate = useNavigate();
+
+    useEffect(
+        () => {
+          const token = localStorage.getItem("token");
+          
+          if(token==null){
+              toast.error("please login to check out");
+              navigate("/login");
+              //return;
+          }
+          axios.get(import.meta.env.VITE_API_URL + "/users/profile" , {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          }).then(
+            (response) => {
+              console.log("USER PROFILE:", response.data);
+              setFirstName(response.data.firstName);
+              setLastName(response.data.lastName);
+            }
+          )
+        },        []
+    )
+
 
   
     async function placeOrder(e) {

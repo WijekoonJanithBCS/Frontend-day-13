@@ -1,9 +1,11 @@
 import axios from "axios";
 import { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import ViewOrderModelInfo from "../../components/viewOrderModelInfo.jsx";
+import CustomerViewOrderInfoModel from "../components/customerViewOrderInfoModel";
+//import ViewOrderModelInfo from "../../components/viewOrderModelInfo.jsx";
 
-export default function AdminOrdersPage() {
+
+export default function MyOrdersPage() {
 
     const [orders, setOrders] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
@@ -30,7 +32,7 @@ export default function AdminOrdersPage() {
     return(
         <div className="w-full h-full overflow-y-scroll bg-blue-300 pl-2">
             <h4 className="font-bold text-xl">Products</h4><br/>
-            <h1>Manage your Orders at a glance</h1><br/>
+            
 
             {isLoaded ? (
                 <table className="w-full table-fixed border-collapse min-w-[1200px]">
@@ -59,7 +61,7 @@ export default function AdminOrdersPage() {
                                     <td className="px-1 py-3 text-center">{order.status}</td>
                                     <td className="px-1 py-3 text-center">
                                         {/* <button className="bg-blue-500 text-white px-4 py-2 rounded">View</button> */}
-                                        <ViewOrderModelInfo order={order}/>
+                                        <CustomerViewOrderInfoModel order={order}/>
 
                                     </td>
                                 </tr>
@@ -76,9 +78,9 @@ export default function AdminOrdersPage() {
                     <h1 className="text-2xl font-bold">Loading...</h1>
                 </div>
             )}
-            <div className="w-[1150px] absolute botom-5 left h-[40px] flex justify-center items-center ">
+            <div className="w-[1150px] fixed bottom-1 left h-[40px] flex justify-center items-center">
                 <div className="w-[500px] h-full bg-white rounded-full items-center  justify-between flex items-center px-5  ">
-                    <button className="bg-blue-400 text-white p-1 rounded-md cursor-pointer w-[100px] "onClick={()=>{
+                    <button className="bg-blue-400 text-white p-1 rounded-md cursor-pointer w-[100px]"onClick={()=>{
                         if(pageNumber > 1){
                             setPageNumber(pageNumber - 1);
                             setLoaded(true);

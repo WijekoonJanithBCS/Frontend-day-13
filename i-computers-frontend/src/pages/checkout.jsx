@@ -3,15 +3,20 @@ import getCartTotal, { addToCart, GetCart } from "../utils/cart";
 import { useLocation, useNavigate } from "react-router-dom";
 //import axios from "axios";
 import CheckoutDetailsModel from "../components/checkoutDetailsModel.jsx";
+import axios from "axios";
 
   export default function CheckOut() {
     const location = useLocation();
     const [cart, setCart] = useState(location.state || []);
+
     const navigate = useNavigate();
 
     if (location.state == null) {
         navigate("/products");
     }
+
+    
+    //firstName, lastName, addressLine1, addressLine2, city, postalCode, phone
 
     async function placeOrder() {
 
@@ -52,6 +57,8 @@ import CheckoutDetailsModel from "../components/checkoutDetailsModel.jsx";
               console.log(error);
           }
     }
+
+    
 
 
 
