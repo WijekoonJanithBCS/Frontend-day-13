@@ -37,7 +37,13 @@ export default function CheckoutDetailsModel(props){
               setLastName(response.data.lastName);
             }
           )
-        },        []
+          .catch(
+                    ()=>{
+                        localStorage.removeItem("token")
+                        window.location.href="/login"
+                    }
+                )
+        }, []
     )
 
 

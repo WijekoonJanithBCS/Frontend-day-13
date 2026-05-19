@@ -19,7 +19,13 @@ export default function UserData() {
                     (response) => {
                         console.log("USER PROFILE:", response.data);
                         setUser(response.data);
-                    })
+                    }
+                ).catch(
+                    ()=>{
+                        localStorage.removeItem("token")
+                        window.location.href="/login"
+                    }
+                )
             }
         }, []       
     )
