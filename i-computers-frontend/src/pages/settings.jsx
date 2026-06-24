@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import UploadFile from "../utils/mediaUpload";
+//import { ToastContainer, toast } from "react-toastify";
 
 export default function SettingsPage(){
     //const [user, setUser] = useState(null)
@@ -41,18 +44,52 @@ export default function SettingsPage(){
 
     async function UpdateProfile(){
         const token = localStorage.getItem("token");
-         const updatedInfo = {
+         const updateInfo = {
             firstName: firstName,
-            lastNamr: lastName,
+            lastName: lastName,
             image: existingImageUrl
          }
          if(file != null){
-            updatedInfo.image = await uploadFile(file)
+            updateInfo.image = await UploadFile(file)
+             
          }
+         const response =await axios.put(import.meta.env.VITE_API_URL + "/users/updateUserProfile", updateInfo, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        localStorage.setItem("token", response.data.token)
+
+        toast.success("Profile updated successfully")
+        window.location.reload()
     }
     
 
     async function ChangePassword(){
+        try {
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+
+        await axios.put(
+            import.meta.env.VITE_API_URL + "/users/update-password",
+            { password },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        toast.success("Password changed successfully");
+
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Password change failed");
+    }
 
     }
 

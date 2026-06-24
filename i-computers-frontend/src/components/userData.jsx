@@ -38,8 +38,11 @@ export default function UserData() {
            
         </div> : 
         <div className="w-[210px] h-[65px] flex justify-end gap-1 bg-white">
-            <img src="/UserImage.png" className="w-[40px] h-[65px] border-1"/>
-            <span className="text-blue-500 pt-5">Welcome -</span>
+            <img src={user?.image || "/UserImage.png"}
+                className="w-[40px] h-[65px] border-1"
+                alt="User"
+            />
+            <span className="text-blue-500 pt-5">Welcome-</span>
             <select value={state} onChange={
                 (e)=>{
                     setState(e.target.value)
@@ -54,7 +57,7 @@ export default function UserData() {
                         localStorage.removeItem("token")
                         window.location.href="/login"
                     }
-                    setstate("me")
+                    setState("me")
 
                 }
             } className=" text-blue-500">
