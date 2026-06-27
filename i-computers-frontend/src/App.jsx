@@ -4,8 +4,12 @@ import AdminPage from "./pages/admin.jsx"
 import HomePage from "./pages/home.jsx"
 import LoginPage from "./pages/login.jsx"
 import TestPage from "./components/test.jsx"
-import {Toaster} from "react-hot-toast"
+//import {toast} from "react-hot-toast"
 import RegisterPage from "./pages/register.jsx"
+import ForgotPasswordPage from "./pages/forgotPassword.jsx"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 function App() {
@@ -13,7 +17,7 @@ function App() {
 
   return (
       <div>
-      <Toaster position="top-right"/> 
+      <ToastContainer />
         <Routes>
           
           <Route path="/*" element={<HomePage/>}/>
@@ -21,6 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
           <Route path="/test" element={<TestPage/>}/>
+          <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
         </Routes>
       </div>
     
