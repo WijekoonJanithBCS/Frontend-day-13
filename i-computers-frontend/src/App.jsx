@@ -4,18 +4,19 @@ import AdminPage from "./pages/admin.jsx"
 import HomePage from "./pages/home.jsx"
 import LoginPage from "./pages/login.jsx"
 import TestPage from "./components/test.jsx"
-//import {toast} from "react-hot-toast"
 import RegisterPage from "./pages/register.jsx"
 import ForgotPasswordPage from "./pages/forgotPassword.jsx"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
-
+//636344840884-9bjmspfe92a8rhcglk587dfukvuf8dg3.apps.googleusercontent.com
 
 function App() {
   
 
   return (
+    <GoogleOAuthProvider clientId="636344840884-9bjmspfe92a8rhcglk587dfukvuf8dg3.apps.googleusercontent.com">
       <div>
       <ToastContainer />
         <Routes>
@@ -32,7 +33,7 @@ function App() {
       
        
         
-      
+    </GoogleOAuthProvider>  
     )
   
 }
