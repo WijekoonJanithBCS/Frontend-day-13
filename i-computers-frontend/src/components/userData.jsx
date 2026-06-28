@@ -38,7 +38,7 @@ export default function UserData() {
            
         </div> : 
         <div className="w-[210px] h-[65px] flex justify-end gap-1 bg-white">
-            <img src={user?.image || "/UserImage.png"}
+            <img referrerPolicy="no-referrer" src={user?.image || "/UserImage.png"}
                 className="w-[40px] h-[65px] border-1"
                 alt="User"
             />

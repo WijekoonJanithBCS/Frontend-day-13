@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function RegisterPage(){
     const [firstName, setFirstName] = useState("");
@@ -10,6 +11,29 @@ export default function RegisterPage(){
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate()
+
+    const googleLogin = useGoogleLogin(
+        {
+            onSuccess: (response) => {
+                axios.post(import.meta.env.VITE_API_URL + "/users/google-login", {token: response.access_token}).then((response)=>{
+                    toast.success("Login successfullocalstorage")
+                    localStorage.setItem("token", response.data.token)
+                    if(response.data.role == "admin"){
+                        navigate("/admin")
+                    }else{
+                        navigate("/")
+                    }
+                }).catch(
+                    (err)=>{
+                        toast.error(err?.response?. data?.message || "Google login failed.please try again...")
+                    }
+                )
+        },
+        onError: (error) => {
+            toast.error("Google login failed.please try again...")
+        }}
+
+    )
 
     async function signup(){
         if(password!=confirmPassword){
@@ -78,7 +102,7 @@ export default function RegisterPage(){
 
                     
                     <button onClick={signup} className="m-5 p-3 w-[90%] h-[50px] rounded-lg bg-blue-700 text-white font-bold">Signup</button>
-                    <button className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-blue-600 text-blue-600 font-bold">SIGNUP WITH GOOGLE</button>
+                    <button onClick={googleLogin} className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-blue-600 text-blue-600 font-bold">SIGNUP WITH GOOGLE</button>
                     <p className="w-full text-right text-blue-700 pr-5">Already have an account ? <Link to="/login" className="text-blue-600 font-bold">Login</Link></p>
                     
                 </div>

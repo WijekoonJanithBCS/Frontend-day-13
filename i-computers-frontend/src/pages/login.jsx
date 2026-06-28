@@ -12,7 +12,20 @@ export default function LoginPage(){
     const googleLogin = useGoogleLogin(
         {
             onSuccess: (response) => {
-                axios.post(import.meta.env.VITE_API_URL + "/users/google-login", {token: response.access_token})
+                axios.post(import.meta.env.VITE_API_URL + "/users/google-login", {token: response.access_token}).then((response)=>{
+                    toast.success("Login successful")
+                    console.log(response)
+                    localStorage.setItem("token", response.data.token)
+                    if(response.data.role == "admin"){
+                        navigate("/admin")
+                    }else{
+                        navigate("/")
+                    }
+                }).catch(
+                    (err)=>{
+                        toast.error(err?.response?. data?.message || "Google login failed.please try again...")
+                    }
+                )
         },
         onError: (error) => {
             toast.error("Google login failed.please try again...")
